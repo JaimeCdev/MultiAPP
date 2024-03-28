@@ -1,0 +1,165 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-segment [value]="segmento" style="height: 40px;" (ionChange)="segment($event)">
+    <ion-segment-button value="notificaciones">
+      <ion-icon name="notifications-sharp"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="multimedia">
+      <ion-icon name="images"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="pinboard">
+      <ion-icon name="paper-plane-outline"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="circulares">
+      <ion-icon name="document-text"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large" *ngIf="segmento == 'notificaciones'">Notificaciones</ion-title>
+      <ion-title size="large" *ngIf="segmento == 'multimedia'">Multimedia</ion-title>
+      <ion-title size="large" *ngIf="segmento == 'pinboard'">Flyers</ion-title>
+      <ion-title size="large" *ngIf="segmento == 'circulares'">Circulares</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <div>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  </div>
+  <ion-row class="row-refresh" class="ion-text-center" style="margin-bottom: -20px;">
+    <ion-col size="12" class="center">
+        <p><ion-icon name="arrow-down-outline" style="zoom:0.9;" class="ion-icon-refresh" slot="start"></ion-icon>
+          Desliza para recargar
+          <ion-icon name="arrow-down-outline" style="zoom:0.9;" class="ion-icon-refresh" slot="end"></ion-icon></p>
+    </ion-col>
+  </ion-row>
+
+<!-- Notificaciones -->
+
+   <ion-list [inset]="true" *ngIf="segmento == 'notificaciones'">
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn" *ngFor="let notificacion of notificaciones" (click)="redirigir(notificacion); setReadNotification(notificacion.type, notificacion.item_id)">
+      <div class="unread-indicator-wrapper" slot="start" *ngIf="notificacion.clase == 'noleida'">
+        <div class="unread-indicator"></div>
+      </div>
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="{{notificacion.url_logo}}" />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <strong *ngIf="notificacion.clase == 'noleida'">{{notificacion.categoria}}</strong>
+        <strong *ngIf="notificacion.clase == 'noleida'">{{notificacion.message}}</strong>
+        <h3 *ngIf="notificacion.clase !== 'noleida'">{{notificacion.categoria}}</h3>
+        <p *ngIf="notificacion.clase !== 'noleida'">{{notificacion.message}}</p>
+        <ion-note color="medium" class="ion-text-wrap">
+          {{notificacion.updated_at}}
+         </ion-note>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-card *ngIf="segmento == 'notificaciones' && notificaciones?.length == 0">
+    <ion-card-header>
+      <ion-card-subtitle class="ion-text-center">No tienes notificaciones sin leer!</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <!-- Multimedia -->
+
+  <ion-card *ngIf="segmento == 'multimedia'" style="width:80%; margin-left:auto; margin-right:auto; background: url('../../assets/img/photo.png') no-repeat center/contain; height: 35%;" (click)="toPhoto()" class="ion-activatable animate__animated animate__fadeIn">
+    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(0,0,0,0.2);"></div>
+    <ion-card-header>
+      <ion-card-title>Photo Album</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card *ngIf="segmento == 'multimedia'" style="width:80%; margin-left:auto; margin-right:auto; background: url('../../assets/img/multimedia.png') no-repeat center/contain; height: 35%;" (click)="toMultimedia()" class="ion-activatable animate__animated animate__fadeIn">
+    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(0,0,0,0.2);"></div>
+    <ion-card-header>
+      <ion-card-title>Multimedia</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <!-- POSTITS -->
+
+  <div *ngIf="segmento == 'pinboard'">
+    <br>
+    <div *ngFor="let item of postIts">
+      <ion-item-divider color="light" class="cssItem">
+        <ion-label>{{ item.date_postit[0].date_grupo }}</ion-label>
+      </ion-item-divider>
+      <ion-row>
+        <ion-col size="6" *ngFor="let postit of item.date_postit" class="ion-activatable animate__animated animate__fadeIn">
+          <div class="color1" (click)="mostrarModal(postit.codigo)">
+            <label class="textfechalit">{{postit.fecha}}</label>
+            <br>
+            <label class="textTitulo biography2">Titulo: {{postit.titulo}}</label>
+            <div class="biography">Descripcion: {{postit.descripcion}}</div>
+            <label class="textPara">Para: {{postit.target}}</label>
+            <br>
+            <br>
+            <!-- <label class="textCodigo">Codigo: {{postit.codigo}}</label> -->
+            <ion-note class="textCodigo">Ver más...</ion-note>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+
+  <ion-card *ngIf="segmento == 'pinboard' && postIts?.length == 0">
+    <ion-card-header>
+      <ion-card-subtitle class="ion-text-center">No tienes PostIts!</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <!-- Circulares -->
+  
+  <div *ngIf="segmento == 'circulares'">
+
+
+    <ng-container *ngFor="let item of circulares">
+      <ion-card [ngStyle]="{'background-image': 'url(' + item.url_logo + ')'}" 
+                color="light"
+                (click)="item.extension === 'pdf' ? mostrarModalPDF(item.link, item.titulo, item.descripcion) : mostrarCircularImg(item.link, item.extension, item.titulo, item.descripcion)" 
+                class="ion-activatable animate__animated animate__fadeIn ion-card-circular">
+                <ion-card-header>
+                  <ion-card-title style="font-size: 22px;">{{item.titulo}}</ion-card-title>
+                  <ion-card-subtitle style="font-size: 10px;">{{item.fecha_publicacion}} - {{item.hora_publicacion}}</ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content> {{item.descripcion}} </ion-card-content>
+      </ion-card>
+    </ng-container>
+
+</div>
+
+<ion-card *ngIf="segmento == 'circulares' && circulares?.length == 0">
+  <ion-card-header>
+    <ion-card-subtitle class="ion-text-center">No tienes circulares disponibles!</ion-card-subtitle>
+  </ion-card-header>
+</ion-card>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button (click)="toChats()">
+    <ion-icon name="chatbubble-ellipses"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<div *ngIf="segmento != 'multimedia'">
+  <span class="screen__background__shape screen__background__shape1"></span>
+  <span class="screen__background__shape screen__background__shape2"></span>
+  <span class="screen__background__shape screen__background__shape3"></span>
+  <span class="screen__background__shape screen__background__shape4"></span>
+</div>
+  
+
+</ion-content>

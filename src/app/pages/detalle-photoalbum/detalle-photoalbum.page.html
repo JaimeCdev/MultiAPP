@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <swiper-container>
+      <swiper-slide class="ion-text-center" *ngFor="let img of multimedia.imagenes" (click)="openModal(img.foto)">
+        <img [src]="img.foto" loading="lazy">
+      </swiper-slide>
+    </swiper-container>
+
+    <ion-card-content>
+      <ion-card-title>
+        {{multimedia.texto}}
+      </ion-card-title>
+      <p>
+        {{multimedia.fecha}}
+      </p>
+    </ion-card-content>
+  </ion-card>  
+
+  <span class="screen__background__shape screen__background__shape1"></span>
+  <span class="screen__background__shape screen__background__shape2"></span>
+  <span class="screen__background__shape screen__background__shape3"></span>
+  <span class="screen__background__shape screen__background__shape4"></span>
+</ion-content>

@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="multimedia.video == '' || multimedia.video == 'null'"
+          [ngStyle]="{'background-image': 'url(' + multimedia.url_logo + ')'}" 
+          color="light"
+          (click)="openLink(multimedia.video)"  class="ion-activatable animate__animated animate__fadeIn ion-card-circular">
+      <ion-card-header>
+        <ion-card-title style="font-size: 22px;">{{multimedia.titulo}}</ion-card-title>
+        <ion-card-subtitle style="font-size: 10px;">{{multimedia.tipo}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content> {{multimedia.categoria}} </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="multimedia.video != '' && multimedia.video != 'null'"
+          [ngStyle]="{'background-image': 'url(' + '../../../assets/img/youtube.png' + ')'}" 
+          color="light"
+          (click)="openLink(multimedia.video)"  class="ion-activatable animate__animated animate__fadeIn ion-card-circular">
+      <ion-card-header>
+        <ion-card-title style="font-size: 22px;">{{multimedia.titulo}}</ion-card-title>
+        <ion-card-subtitle style="font-size: 10px;">{{multimedia.tipo}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content> {{multimedia.categoria}} </ion-card-content>
+    </ion-card>
+
+    <span class="screen__background__shape screen__background__shape1"></span>
+  <span class="screen__background__shape screen__background__shape2"></span>
+  <span class="screen__background__shape screen__background__shape3"></span>
+  <span class="screen__background__shape screen__background__shape4"></span>
+</ion-content>

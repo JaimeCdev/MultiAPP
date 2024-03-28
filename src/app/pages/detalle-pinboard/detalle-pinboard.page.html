@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="cont">
+    <div class="color1">
+      <label class="textfechalit">{{multimedia.data[0].post_fecha_registro}}</label>
+      <br>
+      <label class="textTitulo biography2">Título: {{multimedia.data[0].titulo}}</label>
+      <div class="biography" [innerHTML]="multimedia.data[0].descripcion"></div>
+      <br>
+      <br>
+      <swiper-container effect="flip" *ngIf="multimedia?.data[0].imagenes.length != 0">
+        <swiper-slide class="ion-text-center" *ngFor="let img of multimedia?.data[0].imagenes">
+          <img [src]="img.imagen_url" loading="lazy">
+        </swiper-slide>
+      </swiper-container>
+    </div>
+  </div>
+
+  <span class="screen__background__shape screen__background__shape1"></span>
+  <span class="screen__background__shape screen__background__shape2"></span>
+  <span class="screen__background__shape screen__background__shape3"></span>
+  <span class="screen__background__shape screen__background__shape4"></span>
+</ion-content>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "316945974228",
+    "project_id": "jc-notifications-eb30e",
+    "storage_bucket": "jc-notifications-eb30e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316945974228:android:f47fd290d27e4f0dc84c41",
+        "android_client_info": {
+          "package_name": "test.test.mikehila"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5K5uEbQUmXoeVmdTs_sHWwA2fLgtol3M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

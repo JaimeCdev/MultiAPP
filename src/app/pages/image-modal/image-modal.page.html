@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ver Imagen</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="text-align: center;">
+    <img #myImage [src]="imgSrc" style="max-width: 100%; height: auto; display: inline-block;"/>
+  </div>
+  <ion-button (click)="downloadImage(imgSrc)" expand="block" fill="outline">
+    Descargar Imagen
+  </ion-button>
+</ion-content>
